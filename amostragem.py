@@ -37,6 +37,9 @@ arvore = DecisionTreeClassifier(criterion="entropy", max_depth=4)
 arvore.fit(X_trainset, y_trainset)
 arvore.predict(X_testset)
 
+#Calcular a precisão do modelo
+print("Precisão em porcentagem: ", metrics.accuracy_score(Y_test, predTree)*100)
+
 #Testar
 predTree = arvore.predict(X_test)
 
@@ -53,16 +56,3 @@ with open("submition.csv",'w',newline='') as csv_file:
         writer.writerow(dado)
         count += 1
 
-#Imprimir imagem de saída
-saida_dado = StringIO
-arquivo = "grafc.png"
-features = df.columns[0:11]
-alvo = df["Survived"].unique().tolist()
-saida = tree.export_graphviz(arvore, out_file=saida_dado, feature_names=features, class_names=np.unique(y_trainset), filled=True,special_characters=True,rotate=False)
-grafico = pydotplus.graph_from_dot_data(saida_dado.getvalue())
-grafico.write_png(arquivo)
-img = mpimg.imread(arquivo)
-plt.figure()
-plt.imshow(img)
-#Calcular a precisão do modelo
-#print("Precisão em porcentagem: ", metrics.accuracy_score(Y_test, predTree)*100)
